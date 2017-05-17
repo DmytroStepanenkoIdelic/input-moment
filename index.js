@@ -1,1 +1,1 @@
-module.exports = require('./lib/input-moment');
+module.exports = require('./src/input-moment');

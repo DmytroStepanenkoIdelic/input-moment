@@ -1,6 +1,5 @@
 var cx = require('classnames');
 var blacklist = require('blacklist');
-var moment = require('moment');
 var React = require('react');
 var Calendar = require('./calendar');
 var Time = require('./time');
