@@ -1,5 +1,5 @@
 {
-  "name": "input-moment",
+  "name": "yet-another-datetime-picker",
   "version": "0.4.0",
   "description": "React datetime picker powered by momentjs",
   "main": "index.js",

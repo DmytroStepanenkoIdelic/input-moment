@@ -1,4 +1,4 @@
-# input-moment
+# yet-another-datetime-picker
 React datetime picker powered by [momentjs](http://momentjs.com)
 
 The design is from https://dribbble.com/shots/1439965-Due-Date-and-Time-Picker.
