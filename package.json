@@ -15,7 +15,7 @@
   "github-pages-deploy": {
     "src": "example"
   },
-  "author": "Wang Zuo",
+  "author": "Noah Sugarman,Wang Zuo",
   "license": "ISC",
   "peerDependencies": {
     "moment": "^2.10.6",
