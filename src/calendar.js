@@ -45,10 +45,18 @@ module.exports = React.createClass({
     return (
       <div className={cx('m-calendar', this.props.className)}>
         <div className="toolbar">
+          <button type="button" className="prev-year" onClick={this.prevYear}>
+            <i className={this.props.prevMonthIcon}/>
+            <i className={this.props.prevMonthIcon}/>
+          </button>
           <button type="button" className="prev-month" onClick={this.prevMonth}>
             <i className={this.props.prevMonthIcon}/>
           </button>
           <span className="current-date">{m.format('MMMM YYYY')}</span>
+          <button type="button" className="next-year" onClick={this.nextYear}>
+            <i className={this.props.nextMonthIcon}/>
+            <i className={this.props.nextMonthIcon}/>
+          </button>
           <button type="button" className="next-month" onClick={this.nextMonth}>
             <i className={this.props.nextMonthIcon}/>
           </button>
@@ -97,5 +105,15 @@ module.exports = React.createClass({
   nextMonth(e) {
     e.preventDefault();
     this.props.onChange(this.props.moment.add(1, 'month'));
+  },
+
+  prevYear(e) {
+    e.preventDefault();
+    this.props.onChange(this.props.moment.subtract(1, 'year'));
+  },
+
+  nextYear(e) {
+    e.preventDefault();
+    this.props.onChange(this.props.moment.add(1, 'year'));
   }
 });

@@ -41,10 +41,13 @@
   .current-day {
     color: @color-blue;
     font-weight: bold;
+    background-color: fade(@color-blue, 12.5%);
   }
 
   .prev-month,
-  .next-month {
+  .next-month,
+  .prev-year,
+  .next-year {
     color: #999999;
   }
 
@@ -71,12 +74,22 @@
       cursor: pointer;
     }
 
+    .prev-year,
     .prev-month {
       float: left;
     }
 
+    .next-year,
     .next-month {
       float: right;
+    }
+
+    .prev-year {
+      margin-right: 4px;
+    }
+
+    .next-year {
+      margin-left: 4px;
     }
 
     .current-date {

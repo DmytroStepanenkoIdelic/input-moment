@@ -32,7 +32,7 @@ var App = React.createClass({
         <InputMoment
           moment={this.state.m}
           onChange={this.handleChange}
-          onSave={this.handleSave}
+          type="datetime"
         />
         </form>
       </div>
