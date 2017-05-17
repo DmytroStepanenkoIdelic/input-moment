@@ -1,3 +1,5 @@
+var webpack = require('webpack')
+
 module.exports = {
   entry: {
     'dist/input-moment': './index.js',
@@ -9,12 +11,23 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
+      },
       { test: /\.json$/, loader: 'json-loader' },
       { test: /\.css$/, loader: 'style-loader!css-loader' },
       { test: /\.less$/, loader: 'style-loader!css-loader!less-loader' },
     ]
   },
+  plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+        minimize: true,
+        compressor: { warnings: false }
+      })
+  ],
   externals: {
     'react': 'React',
     'react-dom': 'ReactDOM',
