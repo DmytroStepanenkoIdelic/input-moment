@@ -10,7 +10,7 @@ var Tabs = {
 };
 
 module.exports = React.createClass({
-  displayName: 'InputMoment',
+  displayName: 'DatetimePicker',
 
   getInitialState() {
     return {
@@ -31,7 +31,7 @@ module.exports = React.createClass({
     var dateOnly = this.props.type === 'date';
     var timeOnly = this.props.type === 'time';
     var props = blacklist(this.props, 'className', 'moment', 'prevMonthIcon', 'nextMonthIcon', 'type');
-    props.className = cx('m-input-moment', this.props.className);
+    props.className = cx('m-datetime-picker', this.props.className);
 
     return (
       <div {...props}>

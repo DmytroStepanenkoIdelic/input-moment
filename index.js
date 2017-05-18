@@ -1,2 +1,2 @@
-require('./lib/input-moment.css');
-module.exports = require('./lib/input-moment');
+require('./lib/datetime-picker.css');
+module.exports = require('./lib/datetime-picker');

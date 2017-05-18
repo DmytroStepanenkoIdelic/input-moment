@@ -10,7 +10,7 @@ http://noahsug.github.io/input-moment
 
 ### Usage
 ``` javascript
-<InputMoment
+<DatetimePicker
   moment={this.state.moment}
   onChange={this.handleChange}
   onSave={this.handleSave}
@@ -38,7 +38,7 @@ npm i input-moment --save
 ### Development
 - npm install
 - npm start
-- http://localhost:8888
+- http://localhost:8888/example
 
 ### License
 ISC

@@ -2,7 +2,7 @@ var webpack = require('webpack')
 
 module.exports = {
   entry: {
-    'dist/input-moment': './index.js',
+    'dist/datetime-picker': './index.js',
     'example/bundle': './example/app.js',
   },
   output: {

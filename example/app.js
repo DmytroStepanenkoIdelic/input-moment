@@ -1,10 +1,10 @@
-require('../src/less/input-moment.less');
+require('../src/less/datetime-picker.less');
 require('./app.less');
 
 var moment = require('moment');
 var React = require('react');
 var ReactDOM = require('react-dom');
-var InputMoment = require('../src/input-moment');
+var DatetimePicker = require('../src/datetime-picker');
 var packageJson = require('../package.json');
 
 var App = React.createClass({
@@ -29,7 +29,7 @@ var App = React.createClass({
             readOnly
           />
         </div>
-        <InputMoment
+        <DatetimePicker
           moment={this.state.m}
           onChange={this.handleChange}
           type="datetime"
@@ -42,10 +42,6 @@ var App = React.createClass({
   handleChange(m) {
     this.setState({ m });
   },
-
-  handleSave() {
-    console.log('saved', this.state.m.format('llll'));
-  }
 });
 
 ReactDOM.render(<App/>, document.getElementById('app'));
