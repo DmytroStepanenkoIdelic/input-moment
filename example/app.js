@@ -33,6 +33,7 @@ var App = React.createClass({
           moment={this.state.m}
           onChange={this.handleChange}
           type="datetime"
+          done={this.handleDone}
         />
         </form>
       </div>
@@ -42,6 +43,10 @@ var App = React.createClass({
   handleChange(m) {
     this.setState({ m });
   },
+
+  handleDone() {
+    console.log('saved', this.state.m.format('llll'));
+  }
 });
 
 ReactDOM.render(<App/>, document.getElementById('app'));
