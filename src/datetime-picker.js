@@ -22,9 +22,9 @@ module.exports = React.createClass({
     return {
       prevMonthIcon: 'ion-ios-arrow-left',
       nextMonthIcon: 'ion-ios-arrow-right',
-      doneIcon: 'ion-checkmark im-btn',
-      dateIcon: 'ion-calendar im-btn',
-      timeIcon: 'ion-clock im-btn'
+      doneIcon: 'ion-checkmark',
+      dateIcon: 'ion-calendar',
+      timeIcon: 'ion-clock'
     };
   },
 
@@ -40,10 +40,10 @@ module.exports = React.createClass({
       <div {...props} tabIndex="-1">
         {dateOnly || timeOnly ? null : (
           <div className="options">
-            <button type="button" className={cx(this.props.dateIcon, {'is-active': tab === Tabs.DATE})} onClick={this.handleClickTab.bind(null, 0)}>
+            <button type="button" className={cx('im-btn', this.props.dateIcon, {'is-active': tab === Tabs.DATE})} onClick={this.handleClickTab.bind(null, 0)}>
               Date
             </button>
-            <button type="button" className={cx(this.props.timeIcon, {'is-active': tab === Tabs.TIME})} onClick={this.handleClickTab.bind(null, 1)}>
+            <button type="button" className={cx('im-btn', this.props.timeIcon, {'is-active': tab === Tabs.TIME})} onClick={this.handleClickTab.bind(null, 1)}>
               Time
             </button>
           </div>
@@ -64,7 +64,7 @@ module.exports = React.createClass({
           />
         </div>
 
-        <button type="button" className={cx('btn-done', this.props.doneIcon)} onClick={this.handleDone}>
+        <button type="button" className={cx('btn-done im-btn', this.props.doneIcon)} onClick={this.handleDone}>
           Done
         </button>
       </div>
