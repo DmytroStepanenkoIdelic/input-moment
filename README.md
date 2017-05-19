@@ -22,15 +22,14 @@ http://noahsug.github.io/input-moment
 Check [app.js](https://github.com/noahsug/input-moment/blob/master/example/app.js) for a working example.
 
 ## This repo is forked from [moment-input](https://www.npmjs.com/package/input-moment) with the following changes
-- New prop: type="time" or type="date" or type="datetime", to have a date-only or time-only input.
-- Arrows to move forward or backwards between years.
-- Removed save button.
-- Made it more clear which date is selected.
+- Specify type="time" or type="date" to have a date-only or time-only input.
+- Buttons to move forward or backwards between years.
+- CSS tweaks + make all icons customizable.
 - Fixed package / build issues.
 
 ### Installation
 ``` sh
-npm i input-moment --save
+npm i yet-another-datetime-picker --save
 ```
 
 **Notice:** This module requires [moment](https://www.npmjs.com/package/moment) as a [peerDependency](https://docs.npmjs.com/files/package.json#peerdependencies).

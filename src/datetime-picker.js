@@ -21,7 +21,10 @@ module.exports = React.createClass({
   getDefaultProps() {
     return {
       prevMonthIcon: 'ion-ios-arrow-left',
-      nextMonthIcon: 'ion-ios-arrow-right'
+      nextMonthIcon: 'ion-ios-arrow-right',
+      doneIcon: 'ion-checkmark im-btn',
+      dateIcon: 'ion-calendar im-btn',
+      timeIcon: 'ion-clock im-btn'
     };
   },
 
@@ -30,17 +33,17 @@ module.exports = React.createClass({
     var m = this.props.moment;
     var dateOnly = this.props.type === 'date';
     var timeOnly = this.props.type === 'time';
-    var props = blacklist(this.props, 'className', 'moment', 'prevMonthIcon', 'nextMonthIcon', 'type', 'onDone');
+    var props = blacklist(this.props, 'className', 'moment', 'prevMonthIcon', 'nextMonthIcon', 'doneIcon', 'dateIcon', 'timeIcon', 'type', 'onDone');
     props.className = cx('m-datetime-picker', this.props.className);
 
     return (
       <div {...props} tabIndex="-1">
         {dateOnly || timeOnly ? null : (
           <div className="options">
-            <button type="button" className={cx('ion-calendar im-btn', {'is-active': tab === Tabs.DATE})} onClick={this.handleClickTab.bind(null, 0)}>
+            <button type="button" className={cx(this.props.dateIcon, {'is-active': tab === Tabs.DATE})} onClick={this.handleClickTab.bind(null, 0)}>
               Date
             </button>
-            <button type="button" className={cx('ion-clock im-btn', {'is-active': tab === Tabs.TIME})} onClick={this.handleClickTab.bind(null, 1)}>
+            <button type="button" className={cx(this.props.timeIcon, {'is-active': tab === Tabs.TIME})} onClick={this.handleClickTab.bind(null, 1)}>
               Time
             </button>
           </div>
@@ -61,7 +64,7 @@ module.exports = React.createClass({
           />
         </div>
 
-        <button type="button" className="im-btn btn-done ion-checkmark" onClick={this.handleDone}>
+        <button type="button" className={cx('btn-done', this.props.doneIcon)} onClick={this.handleDone}>
           Done
         </button>
       </div>
