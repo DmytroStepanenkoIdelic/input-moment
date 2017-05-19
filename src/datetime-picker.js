@@ -40,11 +40,11 @@ module.exports = React.createClass({
       <div {...props} tabIndex="-1">
         {dateOnly || timeOnly ? null : (
           <div className="options">
-            <button type="button" className={cx('im-btn', this.props.dateIcon, {'is-active': tab === Tabs.DATE})} onClick={this.handleClickTab.bind(null, 0)}>
-              Date
+            <button type="button" className={cx('im-btn', {'is-active': tab === Tabs.DATE})} onClick={this.handleClickTab.bind(null, 0)}>
+              <i className={this.props.dateIcon}></i>Date
             </button>
-            <button type="button" className={cx('im-btn', this.props.timeIcon, {'is-active': tab === Tabs.TIME})} onClick={this.handleClickTab.bind(null, 1)}>
-              Time
+            <button type="button" className={cx('im-btn', {'is-active': tab === Tabs.TIME})} onClick={this.handleClickTab.bind(null, 1)}>
+              <i className={this.props.timeIcon}></i>Time
             </button>
           </div>
         )}
@@ -64,20 +64,18 @@ module.exports = React.createClass({
           />
         </div>
 
-        <button type="button" className={cx('btn-done im-btn', this.props.doneIcon)} onClick={this.handleDone}>
-          Done
+        <button type="button" className='btn-done im-btn' onClick={this.handleDone}>
+          <i className={this.props.doneIcon}></i>Done
         </button>
       </div>
     );
   },
 
   handleClickTab(tab, e) {
-    e.preventDefault();
     this.setState({tab: tab});
   },
 
   handleDone(e) {
-    e.previousDefault();
     if(this.props.onDone) this.props.onDone();
   }
 });
