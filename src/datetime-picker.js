@@ -1,8 +1,9 @@
-var cx = require('classnames')
-var blacklist = require('blacklist')
-var React = require('react')
-var Calendar = require('./calendar')
-var Time = require('./time')
+const cx = require('classnames')
+const blacklist = require('blacklist')
+const React = require('react')
+const Calendar = require('./calendar')
+const Time = require('./time')
+const themer = require('./themer')
 
 var Tabs = {
   DATE: 0,
@@ -18,17 +19,9 @@ module.exports = React.createClass({
     }
   },
 
-  getDefaultProps() {
-    return {
-      prevMonthIcon: 'ion-ios-arrow-left',
-      nextMonthIcon: 'ion-ios-arrow-right',
-      doneIcon: 'ion-checkmark',
-      dateIcon: 'ion-calendar',
-      timeIcon: 'ion-clock',
-    }
-  },
-
   render() {
+    const theme = themer.getTheme(this.props.theme)
+
     var tab = this.state.tab
     var m = this.props.moment
     var dateOnly = this.props.type === 'date'
@@ -53,17 +46,19 @@ module.exports = React.createClass({
           : <div className="options">
               <button
                 type="button"
+                style={theme.style('button')}
                 className={cx('im-btn', { 'is-active': tab === Tabs.DATE })}
                 onClick={this.handleClickTab.bind(null, 0)}
               >
-                <i className={this.props.dateIcon} />Date
+                <i className={theme.class('dateIcon')} />Date
               </button>
               <button
                 type="button"
+                style={theme.style('button')}
                 className={cx('im-btn', { 'is-active': tab === Tabs.TIME })}
                 onClick={this.handleClickTab.bind(null, 1)}
               >
-                <i className={this.props.timeIcon} />Time
+                <i className={theme.class('timeIcon')} />Time
               </button>
             </div>}
 
@@ -72,8 +67,7 @@ module.exports = React.createClass({
             className={cx('tab', { 'is-active': tab === Tabs.DATE })}
             moment={m}
             onChange={this.props.onChange}
-            prevMonthIcon={this.props.prevMonthIcon}
-            nextMonthIcon={this.props.nextMonthIcon}
+            theme={this.props.theme}
           />
           <Time
             className={cx('tab', { 'is-active': tab === Tabs.TIME })}
@@ -85,9 +79,10 @@ module.exports = React.createClass({
         <button
           type="button"
           className="btn-done im-btn"
+          style={theme.style('button')}
           onClick={this.handleDone}
         >
-          <i className={this.props.doneIcon} />Done
+          <i className={theme.class('doneIcon')} />Done
         </button>
       </div>
     )

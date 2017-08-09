@@ -1,19 +1,23 @@
-var cx = require('classnames');
-var React = require('react');
-var InputSlider = require('react-input-slider');
+var cx = require('classnames')
+var React = require('react')
+var InputSlider = require('react-input-slider')
 
 module.exports = React.createClass({
   displayName: 'Time',
 
   render() {
-    var m = this.props.moment;
+    var m = this.props.moment
 
     return (
       <div className={cx('m-time', this.props.className)}>
         <div className="showtime">
-          <span className="time">{m.format('HH')}</span>
+          <span className="time">
+            {m.format('HH')}
+          </span>
           <span className="separater">:</span>
-          <span className="time">{m.format('mm')}</span>
+          <span className="time">
+            {m.format('mm')}
+          </span>
         </div>
 
         <div className="sliders">
@@ -35,18 +39,18 @@ module.exports = React.createClass({
           />
         </div>
       </div>
-    );
+    )
   },
 
   changeHours(pos) {
-    var m = this.props.moment;
-    m.hours(parseInt(pos.x, 10));
-    this.props.onChange(m);
+    var m = this.props.moment
+    m.hours(parseInt(pos.x, 10))
+    this.props.onChange(m)
   },
 
   changeMinutes(pos) {
-    var m = this.props.moment;
-    m.minutes(parseInt(pos.x, 10));
-    this.props.onChange(m);
-  }
-});
+    var m = this.props.moment
+    m.minutes(parseInt(pos.x, 10))
+    this.props.onChange(m)
+  },
+})
