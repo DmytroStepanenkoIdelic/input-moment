@@ -14,24 +14,23 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       { test: /\.json$/, loader: 'json-loader' },
       { test: /\.css$/, loader: 'style-loader!css-loader' },
       { test: /\.less$/, loader: 'style-loader!css-loader!less-loader' },
-    ]
+    ],
   },
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
-        minimize: true,
-        compressor: { warnings: false }
-      })
+      minimize: true,
+      compressor: { warnings: false },
+    }),
   ],
   externals: {
-    'react': 'React',
+    react: 'React',
     'react-dom': 'ReactDOM',
-    'moment': 'moment',
+    moment: 'moment',
   },
-  devtool: 'source-map'
-};
+  devtool: 'source-map',
+}
