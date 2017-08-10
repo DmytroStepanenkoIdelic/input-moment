@@ -28,8 +28,8 @@ http://noahsug.github.io/input-moment
 Check [app.js](https://github.com/noahsug/input-moment/blob/master/example/app.js) for a working example.
 
 Note: If you change the theme's primaryColor, you should also add CSS rules to change the following:
- * .u-slider-time .value { background-color: <yourPrimaryColor> }
- * .u-slider-time .handle::after { border-color: <yourPrimaryColor> }
+ * .u-slider-time .value { background-color: `<yourPrimaryColor>` }
+ * .u-slider-time .handle::after { border-color: `<yourPrimaryColor>` }
 
 ## This repo is forked from [moment-input](https://www.npmjs.com/package/input-moment) with the following changes
 - Specify type="time" or type="date" to have a date-only or time-only input.
