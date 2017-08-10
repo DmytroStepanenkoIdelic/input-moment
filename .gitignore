@@ -3,6 +3,5 @@ build/Release
 
 node_modules
 .publish
-lib
 dist
 example/bundle*
