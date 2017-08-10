@@ -3,7 +3,7 @@ React datetime picker powered by [momentjs](http://momentjs.com)
 
 The design is from https://dribbble.com/shots/1439965-Due-Date-and-Time-Picker.
 
-The icon is from [ionicons](http://ionicons.com/).
+The icons are from [ionicons](http://ionicons.com/).
 
 ### Demo
 http://noahsug.github.io/input-moment
@@ -13,9 +13,15 @@ http://noahsug.github.io/input-moment
 <DatetimePicker
   moment={this.state.moment}
   onChange={this.handleChange}
-  onSave={this.handleSave}
-  prevMonthIcon="ion-ios-arrow-left" // default
-  nextMonthIcon="ion-ios-arrow-right" // default
+  onDone={this.handleDone}
+  theme={{
+    primaryColor="#1385e5", // default
+    iconPrevMonth="ion-ios-arrow-left", // default
+    iconNextMonth="ion-ios-arrow-right", // default
+    iconDone: 'ion-checkmark',  // default
+    iconDate: 'ion-calendar',  // default
+    iconTime: 'ion-clock',  // default
+  }}
   type="datetime" // default, other values are "date" or "type"
 />
 ```
@@ -23,8 +29,8 @@ Check [app.js](https://github.com/noahsug/input-moment/blob/master/example/app.j
 
 ## This repo is forked from [moment-input](https://www.npmjs.com/package/input-moment) with the following changes
 - Specify type="time" or type="date" to have a date-only or time-only input.
+- Theming support allows customization of colors and icons.
 - Buttons to move forward or backwards between years.
-- CSS tweaks + make all icons customizable.
 - Fixed package / build issues.
 
 ### Installation

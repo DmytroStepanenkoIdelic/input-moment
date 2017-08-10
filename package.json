@@ -27,6 +27,7 @@
     "babel-core": "^6.24.1",
     "babel-jest": "^20.0.3",
     "babel-loader": "^7.0.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
@@ -48,8 +49,10 @@
   "dependencies": {
     "blacklist": "^1.1.4",
     "classnames": "^2.2.5",
+    "color": "^2.0.0",
     "lodash": "^4.17.4",
-    "react-input-slider": "^1.6.0"
+    "react-input-slider": "^1.6.0",
+    "react-jss": "^7.0.2"
   },
   "repository": {
     "type": "git",

@@ -1,27 +1,41 @@
-var cx = require('classnames')
-var React = require('react')
-var InputSlider = require('react-input-slider')
+import cx from 'classnames'
+import injectSheet from 'react-jss'
+import React from 'react'
+import InputSlider from 'react-input-slider'
 
-module.exports = React.createClass({
+const styles = theme => ({
+  separater: {
+    color: theme.colorPrimary,
+  },
+  timeText: {
+    color: theme.colorPrimary,
+  },
+  time: {
+    backgroundColor: theme.colorPrimary,
+  },
+})
+
+const Time = React.createClass({
   displayName: 'Time',
 
   render() {
-    var m = this.props.moment
+    const cs = this.props.classes
+    const m = this.props.moment
 
     return (
       <div className={cx('m-time', this.props.className)}>
         <div className="showtime">
-          <span className="time">
+          <span className={`time ${cs.time}`}>
             {m.format('HH')}
           </span>
-          <span className="separater">:</span>
-          <span className="time">
+          <span className={`separater ${cs.separater}`}>:</span>
+          <span className={`time ${cs.time}`}>
             {m.format('mm')}
           </span>
         </div>
 
         <div className="sliders">
-          <div className="time-text">Hours:</div>
+          <div className={`time-text ${cs.timeText}`}>Hours:</div>
           <InputSlider
             className="u-slider-time"
             xmin={0}
@@ -29,7 +43,7 @@ module.exports = React.createClass({
             x={m.hour()}
             onChange={this.changeHours}
           />
-          <div className="time-text">Minutes:</div>
+          <div className={`time-text ${cs.timeText}`}>Minutes:</div>
           <InputSlider
             className="u-slider-time"
             xmin={0}
@@ -43,14 +57,16 @@ module.exports = React.createClass({
   },
 
   changeHours(pos) {
-    var m = this.props.moment
+    const m = this.props.moment
     m.hours(parseInt(pos.x, 10))
     this.props.onChange(m)
   },
 
   changeMinutes(pos) {
-    var m = this.props.moment
+    const m = this.props.moment
     m.minutes(parseInt(pos.x, 10))
     this.props.onChange(m)
   },
 })
+
+export default injectSheet(styles)(Time)

@@ -1,15 +1,30 @@
-var cx = require('classnames')
-var blacklist = require('blacklist')
-var React = require('react')
-var Calendar = require('./calendar')
-var Time = require('./time')
+import cx from 'classnames'
+import injectSheet, { ThemeProvider } from 'react-jss'
+import blacklist from 'blacklist'
+import React from 'react'
+import Calendar from './calendar'
+import Time from './time'
+import defaultTheme from './theme'
 
-var Tabs = {
+const Tabs = {
   DATE: 0,
   TIME: 1,
 }
 
-module.exports = React.createClass({
+const styles = theme => ({
+  optionsButton: {
+    color: theme.colorPrimary,
+    border: `1px solid ${theme.colorPrimary}`,
+    '&.is-active': {
+      background: theme.colorPrimary,
+    },
+  },
+  doneButton: {
+    background: theme.colorPrimary,
+  },
+})
+
+const DatetimePicker = React.createClass({
   displayName: 'DatetimePicker',
 
   getInitialState() {
@@ -18,34 +33,24 @@ module.exports = React.createClass({
     }
   },
 
-  getDefaultProps() {
-    return {
-      prevMonthIcon: 'ion-ios-arrow-left',
-      nextMonthIcon: 'ion-ios-arrow-right',
-      doneIcon: 'ion-checkmark',
-      dateIcon: 'ion-calendar',
-      timeIcon: 'ion-clock',
-    }
-  },
-
   render() {
-    var tab = this.state.tab
-    var m = this.props.moment
-    var dateOnly = this.props.type === 'date'
-    var timeOnly = this.props.type === 'time'
-    var props = blacklist(
+    const tab = this.state.tab
+    const cs = this.props.classes
+    const m = this.props.moment
+    const dateOnly = this.props.type === 'date'
+    const timeOnly = this.props.type === 'time'
+    const props = blacklist(
       this.props,
       'className',
       'moment',
-      'prevMonthIcon',
-      'nextMonthIcon',
-      'doneIcon',
-      'dateIcon',
-      'timeIcon',
       'type',
-      'onDone'
+      'onDone',
+      'classes',
+      'sheet',
+      'theme'
     )
     props.className = cx('m-datetime-picker', this.props.className)
+
     return (
       <div {...props} tabIndex="-1">
         {dateOnly || timeOnly
@@ -53,17 +58,21 @@ module.exports = React.createClass({
           : <div className="options">
               <button
                 type="button"
-                className={cx('im-btn', { 'is-active': tab === Tabs.DATE })}
+                className={cx('im-btn', cs.optionsButton, {
+                  'is-active': tab === Tabs.DATE,
+                })}
                 onClick={this.handleClickTab.bind(null, 0)}
               >
-                <i className={this.props.dateIcon} />Date
+                <i className={this.props.theme.iconDate} />Date
               </button>
               <button
                 type="button"
-                className={cx('im-btn', { 'is-active': tab === Tabs.TIME })}
+                className={cx('im-btn', cs.optionsButton, {
+                  'is-active': tab === Tabs.TIME,
+                })}
                 onClick={this.handleClickTab.bind(null, 1)}
               >
-                <i className={this.props.timeIcon} />Time
+                <i className={this.props.theme.iconTime} />Time
               </button>
             </div>}
 
@@ -72,8 +81,7 @@ module.exports = React.createClass({
             className={cx('tab', { 'is-active': tab === Tabs.DATE })}
             moment={m}
             onChange={this.props.onChange}
-            prevMonthIcon={this.props.prevMonthIcon}
-            nextMonthIcon={this.props.nextMonthIcon}
+            theme={this.props.theme}
           />
           <Time
             className={cx('tab', { 'is-active': tab === Tabs.TIME })}
@@ -84,10 +92,10 @@ module.exports = React.createClass({
 
         <button
           type="button"
-          className="btn-done im-btn"
+          className={`btn-done im-btn ${cs.doneButton}`}
           onClick={this.handleDone}
         >
-          <i className={this.props.doneIcon} />Done
+          <i className={this.props.theme.iconDone} />Done
         </button>
       </div>
     )
@@ -101,3 +109,13 @@ module.exports = React.createClass({
     if (this.props.onDone) this.props.onDone()
   },
 })
+
+const StyledDatetimePicker = injectSheet(styles)(DatetimePicker)
+
+export default props => {
+  return (
+    <ThemeProvider theme={{ ...defaultTheme, ...props.theme }}>
+      <StyledDatetimePicker {...props} />
+    </ThemeProvider>
+  )
+}
