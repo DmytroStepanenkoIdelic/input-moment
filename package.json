@@ -10,7 +10,7 @@
     "build": "npm run build-js && npm run build-css",
     "deploy": "npm run build && github-pages-deploy",
     "test": "jest",
-    "clean": "rm dist/* && rm example/bundle*"
+    "clean": "rm dist/* && rm example/bundle* && rm lib/*"
   },
   "github-pages-deploy": {
     "src": "example"
