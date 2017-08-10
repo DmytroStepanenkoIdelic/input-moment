@@ -50,6 +50,7 @@
     "blacklist": "^1.1.4",
     "classnames": "^2.2.5",
     "color": "^2.0.0",
+    "jss-nested": "^5.0.0",
     "lodash": "^4.17.4",
     "react-input-slider": "^1.6.0",
     "react-jss": "^7.0.2"

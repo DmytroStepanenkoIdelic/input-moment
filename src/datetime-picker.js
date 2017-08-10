@@ -1,10 +1,13 @@
 import cx from 'classnames'
-import injectSheet, { ThemeProvider } from 'react-jss'
+import jssNested from 'jss-nested'
+import injectSheet, { JssProvider, ThemeProvider, jss } from 'react-jss'
 import blacklist from 'blacklist'
 import React from 'react'
 import Calendar from './calendar'
 import Time from './time'
 import defaultTheme from './theme'
+
+jss.use(jssNested())
 
 const Tabs = {
   DATE: 0,

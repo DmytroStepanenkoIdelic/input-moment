@@ -13,6 +13,14 @@ const styles = theme => ({
   time: {
     backgroundColor: theme.colorPrimary,
   },
+  slider: {
+    '& .value': {
+      backgroundColor: theme.colorPrimary,
+    },
+    '& .handle:after': {
+      border: `3px solid ${theme.colorPrimary}`,
+    },
+  },
 })
 
 const Time = React.createClass({
@@ -37,7 +45,7 @@ const Time = React.createClass({
         <div className="sliders">
           <div className={`time-text ${cs.timeText}`}>Hours:</div>
           <InputSlider
-            className="u-slider-time"
+            className={`u-slider-time ${cs.slider}`}
             xmin={0}
             xmax={23}
             x={m.hour()}
@@ -45,7 +53,7 @@ const Time = React.createClass({
           />
           <div className={`time-text ${cs.timeText}`}>Minutes:</div>
           <InputSlider
-            className="u-slider-time"
+            className={`u-slider-time ${cs.slider}`}
             xmin={0}
             xmax={59}
             x={m.minute()}

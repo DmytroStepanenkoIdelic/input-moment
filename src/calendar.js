@@ -16,7 +16,7 @@ const styles = theme => ({
       borderColor: theme.colorPrimary,
     },
     '&.current-day': {
-      background: color(theme.colorPrimary).fade(0.125),
+      background: color(theme.colorPrimary).alpha(0.125).string(),
       color: theme.colorPrimary,
     },
   },
