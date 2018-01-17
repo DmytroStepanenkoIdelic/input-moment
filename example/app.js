@@ -10,13 +10,27 @@ var packageJson = require('../package.json')
 var App = React.createClass({
   displayName: 'App',
 
+  selectionTypes: [{
+    value: 'single',
+    label: 'Single Date'
+  }, {
+    value: 'start',
+    label: 'Start Date'
+  }, {
+    value: 'end',
+    label: 'End Date'
+  }],
+
   getInitialState() {
     return {
       m: moment(),
+      rangeType: 'single',
+      range: null
     }
   },
 
   render() {
+    console.log(this.state.m, this.state.range);
     return (
       <div className="app">
         <h1>
@@ -29,8 +43,22 @@ var App = React.createClass({
           <div className="input">
             <input type="text" value={this.state.m.format('llll')} readOnly />
           </div>
+          <div className="input">
+            {this.selectionTypes.map(selectionType => (
+              <label>
+                <input
+                  type="radio"
+                  value={selectionType.value}
+                  checked={this.state.rangeType == selectionType.value}
+                  onChange={this.handleRangeChange}
+                />
+                <span>{selectionType.label}</span>
+              </label>
+            ))}
+          </div>
           <DatetimePicker
             moment={this.state.m}
+            range={this.state.range}
             onChange={this.handleChange}
             type="datetime"
             onDone={this.handleDone}
@@ -42,6 +70,35 @@ var App = React.createClass({
 
   handleChange(m) {
     this.setState({ m })
+  },
+
+  handleRangeChange(evt) {
+    const rangeType = evt.target.value;
+    if (rangeType == 'single') {
+      this.setState({
+        rangeType,
+        range: null
+      })
+    } else {
+      if (this.state.rangeType == 'single') {
+        this.setState({
+          rangeType,
+          range: {
+            type: rangeType,
+            other: null
+          }
+        })
+      } else {
+        this.setState({
+          rangeType,
+          range: {
+            type: rangeType,
+            other: this.state.m
+          },
+          m: this.state.range.other || this.state.m.clone()
+        })
+      }
+    }
   },
 
   handleDone() {

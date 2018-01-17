@@ -19,6 +19,14 @@ const styles = theme => ({
       background: color(theme.colorPrimary).alpha(0.125).string(),
       color: theme.colorPrimary,
     },
+    '&.other-day': {
+      background: color(theme.colorSecondary).alpha(0.125).string(),
+      color: theme.colorSecondary
+    },
+    '&.range-day': {
+      background: color(theme.colorSecondary).alpha(0.0725).string(),
+      color: theme.colorSecondary
+    },
   },
   toolbar: {
     color: theme.colorPrimary,
@@ -40,11 +48,12 @@ const Day = React.createClass({
     const w = this.props.w
     const prevMonth = w === 0 && i > 7
     const nextMonth = w >= 4 && i <= 14
+
     const props = blacklist(this.props, 'i', 'w', 'd', 'className')
     props.className = cx(this.props.className, {
       'prev-month': prevMonth,
       'next-month': nextMonth,
-      'current-day': !prevMonth && !nextMonth && i === this.props.d,
+      'current-day': !prevMonth && !nextMonth && i === this.props.d
     })
 
     return (
@@ -57,6 +66,36 @@ const Day = React.createClass({
 
 const Calendar = React.createClass({
   displayName: 'Calendar',
+
+  getDate(i, w) {
+    const prevMonth = w === 0 && i > 7
+    const nextMonth = w >= 4 && i <= 14
+    const addMonth = prevMonth ? -1 : nextMonth ? 1 : 0
+    return this.props.moment.clone().add(addMonth, 'month').set('date', i).startOf('day')
+  },
+
+  isOther(i, w) {
+    const date = this.getDate(i, w)
+    const other = this.props.range && this.props.range.other
+    if (other) {
+      return other.startOf('day').isSame(date)
+    }
+    return false
+  },
+
+  inRange(i, w) {
+    const date = this.getDate(i, w)
+    const range = this.props.range
+    const other = range && range.other
+    if (other) {
+      if (range.type == 'start') {
+        return this.props.moment.startOf('day').isBefore(date) && other.startOf('day').isAfter(date)
+      } else if (range.type == 'end') {
+        return this.props.moment.startOf('day').isAfter(date) && other.startOf('day').isBefore(date)
+      }
+    }
+    return false;
+  },
 
   render() {
     const cs = this.props.classes
@@ -132,7 +171,10 @@ const Calendar = React.createClass({
                     i={i}
                     d={d}
                     w={w}
-                    className={cs.dayCell}
+                    className={[cs.dayCell, {
+                      'other-day': this.isOther(i, w),
+                      'range-day': this.inRange(i, w)
+                    }]}
                     onClick={this.selectDate.bind(null, i, w)}
                   />
                 )}

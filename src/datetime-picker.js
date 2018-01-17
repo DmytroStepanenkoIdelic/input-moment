@@ -40,12 +40,14 @@ const DatetimePicker = React.createClass({
     const tab = this.state.tab
     const cs = this.props.classes
     const m = this.props.moment
+    const range = this.props.range
     const dateOnly = this.props.type === 'date'
     const timeOnly = this.props.type === 'time'
     const props = blacklist(
       this.props,
       'className',
       'moment',
+      'range',
       'type',
       'onDone',
       'classes',
@@ -83,6 +85,7 @@ const DatetimePicker = React.createClass({
           <Calendar
             className={cx('tab', { 'is-active': tab === Tabs.DATE })}
             moment={m}
+            range={range}
             onChange={this.props.onChange}
             theme={this.props.theme}
           />
