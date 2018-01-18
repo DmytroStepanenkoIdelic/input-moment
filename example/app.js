@@ -19,18 +19,20 @@ var App = React.createClass({
   }, {
     value: 'end',
     label: 'End Date'
+  }, {
+    value: 'range',
+    label: 'In Range'
   }],
 
   getInitialState() {
     return {
-      m: moment(),
+      date: moment(),
       rangeType: 'single',
       range: null
     }
   },
 
   render() {
-    console.log(this.state.m, this.state.range);
     return (
       <div className="app">
         <h1>
@@ -41,8 +43,15 @@ var App = React.createClass({
         </h2>
         <form>
           <div className="input">
-            <input type="text" value={this.state.m.format('llll')} readOnly />
+            <input type="text" value={this.state.date.format('llll')} readOnly />
           </div>
+          <DatetimePicker
+            moment={this.state.date}
+            range={this.state.range}
+            onChange={this.handleChange}
+            type="datetime"
+            onDone={this.handleDone}
+          />
           <div className="input">
             {this.selectionTypes.map(selectionType => (
               <label>
@@ -56,53 +65,63 @@ var App = React.createClass({
               </label>
             ))}
           </div>
-          <DatetimePicker
-            moment={this.state.m}
-            range={this.state.range}
-            onChange={this.handleChange}
-            type="datetime"
-            onDone={this.handleDone}
-          />
         </form>
       </div>
     )
   },
 
-  handleChange(m) {
-    this.setState({ m })
+  handleChange(date) {
+    this.setState({ date })
   },
 
   handleRangeChange(evt) {
     const rangeType = evt.target.value;
+    this.setState({rangeType});
     if (rangeType == 'single') {
-      this.setState({
-        rangeType,
-        range: null
-      })
+      this.setState({range: null});
+    } else if (rangeType == 'range') {
+      if (this.state.rangeType == 'start') {
+        this.setState({
+          range: {
+            start: this.state.date.clone(),
+            end: this.state.range.end
+          }
+        });
+      } else if (this.state.rangeType == 'end') {
+        this.setState({
+          range: {
+            start: this.state.range.start,
+            end: this.state.date.clone()
+          }
+        });
+      }
     } else {
       if (this.state.rangeType == 'single') {
+        this.setState({range: {}});
+      } else if (this.state.rangeType == 'end') {
         this.setState({
-          rangeType,
-          range: {
-            type: rangeType,
-            other: null
-          }
-        })
-      } else {
+          range: {end: this.state.date.clone()},
+          date: this.state.range.start
+        });
+      } else if (this.state.rangeType == 'start') {
         this.setState({
-          rangeType,
-          range: {
-            type: rangeType,
-            other: this.state.m
-          },
-          m: this.state.range.other || this.state.m.clone()
-        })
+          range: {start: this.state.date.clone()},
+          date: this.state.range.end
+        });
+      } else if (rangeType == 'start') {
+        this.setState({
+          range: {end: this.state.range.end}
+        });
+      } else if (rangeType == 'end') {
+        this.setState({
+          range: {start: this.state.range.start}
+        });
       }
     }
   },
 
   handleDone() {
-    console.log('saved', this.state.m.format('llll'))
+    console.log('saved', this.state.date.format('llll'))
   },
 })
 

@@ -39,8 +39,13 @@ const DatetimePicker = React.createClass({
   render() {
     const tab = this.state.tab
     const cs = this.props.classes
-    const m = this.props.moment
+    const selected = this.props.moment
     const range = this.props.range
+    if (range) {
+      range.start = range.start || selected
+      range.end = range.end || selected
+    }
+
     const dateOnly = this.props.type === 'date'
     const timeOnly = this.props.type === 'time'
     const props = blacklist(
@@ -84,14 +89,14 @@ const DatetimePicker = React.createClass({
         <div className="tabs">
           <Calendar
             className={cx('tab', { 'is-active': tab === Tabs.DATE })}
-            moment={m}
+            moment={selected}
             range={range}
             onChange={this.props.onChange}
             theme={this.props.theme}
           />
           <Time
             className={cx('tab', { 'is-active': tab === Tabs.TIME })}
-            moment={m}
+            moment={selected}
             onChange={this.props.onChange}
           />
         </div>
