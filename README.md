@@ -12,10 +12,17 @@ http://noahsug.github.io/input-moment
 ``` javascript
 <DatetimePicker
   moment={this.state.moment}
+  range={{
+    start: this.state.startRange, // optional
+    end: this.state.endRange // optional
+  }}
   onChange={this.handleChange}
   onDone={this.handleDone}
   theme={{
     colorPrimary="#1385e5", // default
+    colorSecondary="#e77213", // default
+    colorGray="#999999", // default
+    colorError="#e71313", // default
     iconPrevMonth="ion-ios-arrow-left", // default
     iconNextMonth="ion-ios-arrow-right", // default
     iconDone: 'ion-checkmark',  // default
@@ -32,6 +39,7 @@ Check [app.js](https://github.com/noahsug/input-moment/blob/master/example/app.j
 - Theming support allows customization of colors and icons.
 - Buttons to move forward or backwards between years.
 - Fixed package / build issues.
+- Date range added which highlights the days in the range specified
 
 ### Installation
 ``` sh
