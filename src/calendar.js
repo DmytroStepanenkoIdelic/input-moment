@@ -99,18 +99,18 @@ const Calendar = React.createClass({
   isRangeEnd(date, week) {
     const datetime = this.getDateTime(date, week)
     const {range} = this.props
-    return range
-      ? range.end.startOf('day').isSame(datetime) ||
-        range.start.startOf('day').isSame(datetime)
-      : false
+    return range && (
+      range.end.startOf('day').isSame(datetime) ||
+      range.start.startOf('day').isSame(datetime)
+    );
   },
 
   inRange(date, week) {
     const datetime = this.getDateTime(date, week)
     const {range} = this.props
-    return range
-      ? range.start.startOf('day').isBefore(datetime) && range.end.startOf('day').isAfter(datetime)
-      : false
+    return range &&
+      range.start.startOf('day').isBefore(datetime) &&
+      range.end.startOf('day').isAfter(datetime);
   },
 
   notInRange(date, week) {
@@ -185,9 +185,9 @@ const Calendar = React.createClass({
           <tbody>
             {chunk(days, 7).map((row, week) =>
               <tr key={week}>
-                {row.map((date, i) =>
+                {row.map(date =>
                   <Day
-                    key={i}
+                    key={`${week}_${date}`}
                     date={date}
                     onClick={this.selectDate.bind(null, date, week)}
                     className={cs.dayCell}
