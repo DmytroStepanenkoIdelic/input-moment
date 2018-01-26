@@ -1,5 +1,8 @@
 export default {
   colorPrimary: '#1385e5',
+  colorSecondary: '#e77213',
+  colorGray: '#999999',
+  colorError: '#e71313',
   iconPrevMonth: 'ion-ios-arrow-left',
   iconNextMonth: 'ion-ios-arrow-right',
   iconDone: 'ion-checkmark',

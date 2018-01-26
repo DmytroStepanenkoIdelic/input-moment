@@ -11,13 +11,28 @@ const styles = theme => ({
     color: `${theme.colorPrimary} !important`,
   },
   dayCell: {
-    '&:hover': {
-      background: `${theme.colorPrimary} !important`,
-      borderColor: theme.colorPrimary,
+    '&.prev-or-next-month': {
+      color: theme.colorGray
     },
-    '&.current-day': {
+    '&.range-day': {
+      background: color(theme.colorSecondary).alpha(0.0725).string(),
+      color: theme.colorSecondary
+    },
+    '&.range-end-day': {
+      background: color(theme.colorSecondary).alpha(0.125).string(),
+      color: theme.colorSecondary
+    },
+    '&.selected-day': {
       background: color(theme.colorPrimary).alpha(0.125).string(),
       color: theme.colorPrimary,
+    },
+    '&.not-range-day': {
+      background: color(theme.colorError).alpha(0.125).string(),
+      color: theme.colorError
+    },
+    '&:hover': {
+      background: theme.colorPrimary,
+      borderColor: theme.colorPrimary,
     },
   },
   toolbar: {
@@ -27,7 +42,7 @@ const styles = theme => ({
     border: `1px solid ${theme.colorPrimary}`,
     background: theme.colorPrimary,
   },
-  currentDate: {
+  selectedDate: {
     color: theme.colorPrimary,
   },
 })
@@ -36,20 +51,20 @@ const Day = React.createClass({
   displayName: 'Day',
 
   render() {
-    const i = this.props.i
-    const w = this.props.w
-    const prevMonth = w === 0 && i > 7
-    const nextMonth = w >= 4 && i <= 14
-    const props = blacklist(this.props, 'i', 'w', 'd', 'className')
+    const {date, selectedDay, rangeEndDay, rangeDay, notRangeDay, prevOrNextMonth} = this.props
+    const props = blacklist(this.props, 'date', 'selectedDay', 'rangeEndDay', 'rangeDay', 'notRangeDay', 'prevOrNextMonth', 'className')
+
     props.className = cx(this.props.className, {
-      'prev-month': prevMonth,
-      'next-month': nextMonth,
-      'current-day': !prevMonth && !nextMonth && i === this.props.d,
+      'selected-day': selectedDay,
+      'range-end-day': rangeEndDay,
+      'range-day': rangeDay,
+      'not-range-day': selectedDay && notRangeDay,
+      'prev-or-next-month': prevOrNextMonth
     })
 
     return (
       <td {...props}>
-        {i}
+        {date}
       </td>
     )
   },
@@ -58,18 +73,62 @@ const Day = React.createClass({
 const Calendar = React.createClass({
   displayName: 'Calendar',
 
+  getPrevOrNextMonth(date, week) {
+    return {
+      prevMonth: week === 0 && date > 7,
+      nextMonth: week >= 4 && date <= 14
+    }
+  },
+
+  isPrevOrNextMonth(date, week) {
+    const {prevMonth, nextMonth} = this.getPrevOrNextMonth(date, week)
+    return prevMonth || nextMonth
+  },
+
+  getDateTime(date, week) {
+    const {prevMonth, nextMonth} = this.getPrevOrNextMonth(date, week)
+    const addMonth = prevMonth ? -1 : nextMonth ? 1 : 0
+    return this.props.moment.clone().add(addMonth, 'month').set('date', date).startOf('day')
+  },
+
+  isSelected(selectedDate, date, week) {
+    console.log(selectedDate, date, week, this.isPrevOrNextMonth(date, week));
+    return !this.isPrevOrNextMonth(date, week) && date === selectedDate
+  },
+
+  isRangeEnd(date, week) {
+    const datetime = this.getDateTime(date, week)
+    const {range} = this.props
+    return range && (
+      range.end.startOf('day').isSame(datetime) ||
+      range.start.startOf('day').isSame(datetime)
+    );
+  },
+
+  inRange(date, week) {
+    const datetime = this.getDateTime(date, week)
+    const {range} = this.props
+    return range &&
+      range.start.startOf('day').isBefore(datetime) &&
+      range.end.startOf('day').isAfter(datetime);
+  },
+
+  notInRange(date, week) {
+    return this.props.range && !this.inRange(date, week) && !this.isRangeEnd(date, week);
+  },
+
   render() {
     const cs = this.props.classes
-    const m = this.props.moment
-    const d = m.date()
-    const d1 = m.clone().subtract(1, 'month').endOf('month').date()
-    const d2 = m.clone().date(1).day()
-    const d3 = m.clone().endOf('month').date()
+    const selected = this.props.moment
+    const selectedDate = selected.date()
+    const endPrevMonth = selected.clone().subtract(1, 'month').endOf('month').date()
+    const startThisMonth = selected.clone().date(1).day()
+    const endThisMonth = selected.clone().endOf('month').date()
 
     const days = [].concat(
-      range(d1 - d2 + 1, d1 + 1),
-      range(1, d3 + 1),
-      range(1, 42 - d3 - d2 + 1)
+      range(endPrevMonth - startThisMonth + 1, endPrevMonth + 1),
+      range(1, endThisMonth + 1),
+      range(1, 42 - endThisMonth - startThisMonth + 1)
     )
 
     const weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -92,8 +151,8 @@ const Calendar = React.createClass({
           >
             <i className={this.props.theme.iconPrevMonth} />
           </button>
-          <span className={cs.currentDate}>
-            {m.format('MMMM YYYY')}
+          <span className={cs.selectedDate}>
+            {selected.format('MMMM YYYY')}
           </span>
           <button
             type="button"
@@ -115,25 +174,28 @@ const Calendar = React.createClass({
         <table>
           <thead>
             <tr>
-              {weeks.map((w, i) =>
-                <td key={i} className={cs.weekHeader}>
-                  {w}
+              {weeks.map(week =>
+                <td key={week} className={cs.weekHeader}>
+                  {week}
                 </td>
               )}
             </tr>
           </thead>
 
           <tbody>
-            {chunk(days, 7).map((row, w) =>
-              <tr key={w}>
-                {row.map(i =>
+            {chunk(days, 7).map((row, week) =>
+              <tr key={week}>
+                {row.map(date =>
                   <Day
-                    key={i}
-                    i={i}
-                    d={d}
-                    w={w}
+                    key={`${week}_${date}`}
+                    date={date}
+                    onClick={this.selectDate.bind(null, date, week)}
                     className={cs.dayCell}
-                    onClick={this.selectDate.bind(null, i, w)}
+                    selectedDay={this.isSelected(selectedDate, date, week)}
+                    rangeEndDay={this.isRangeEnd(date, week)}
+                    rangeDay={this.inRange(date, week)}
+                    notRangeDay={this.notInRange(date, week)}
+                    prevOrNextMonth={this.isPrevOrNextMonth(date, week)}
                   />
                 )}
               </tr>
@@ -144,16 +206,15 @@ const Calendar = React.createClass({
     )
   },
 
-  selectDate(i, w) {
-    const prevMonth = w === 0 && i > 7
-    const nextMonth = w >= 4 && i <= 14
-    const m = this.props.moment
+  selectDate(date, week) {
+    const {prevMonth, nextMonth} = this.getPrevOrNextMonth(date, week)
+    const selected = this.props.moment
 
-    m.date(i)
-    if (prevMonth) m.subtract(1, 'month')
-    if (nextMonth) m.add(1, 'month')
+    selected.date(date)
+    if (prevMonth) selected.subtract(1, 'month')
+    if (nextMonth) selected.add(1, 'month')
 
-    this.props.onChange(m)
+    this.props.onChange(selected)
   },
 
   prevMonth(e) {
