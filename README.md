@@ -50,7 +50,6 @@ npm i yet-another-datetime-picker --save
 
 ### Development
 - npm install
-- npm run build
 - npm start
 - http://localhost:8888/example
 

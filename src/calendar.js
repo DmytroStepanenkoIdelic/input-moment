@@ -92,7 +92,6 @@ const Calendar = React.createClass({
   },
 
   isSelected(selectedDate, date, week) {
-    console.log(selectedDate, date, week, this.isPrevOrNextMonth(date, week));
     return !this.isPrevOrNextMonth(date, week) && date === selectedDate
   },
 
