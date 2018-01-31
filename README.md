@@ -1,12 +1,11 @@
-# yet-another-datetime-picker
-React datetime picker powered by [momentjs](http://momentjs.com)
+# [yet-another-datetime-picker](http://noahsug.github.io/input-moment)
+> React datetime picker powered by [momentjs](http://momentjs.com)
 
-The design is from https://dribbble.com/shots/1439965-Due-Date-and-Time-Picker
+Design from https://dribbble.com/shots/1439965-Due-Date-and-Time-Picker
 
-The icons are from [ionicons](http://ionicons.com/)
+Icons from [ionicons](http://ionicons.com/)
 
-### Demo
-http://noahsug.github.io/input-moment
+### [Demo](http://noahsug.github.io/input-moment)
 
 ### Usage
 ``` javascript
