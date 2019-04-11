@@ -7,3 +7,4 @@ package-lock.json
 dist
 example/bundle*
 lib
+.idea

@@ -7,10 +7,10 @@ var ReactDOM = require('react-dom')
 var DatetimePicker = require('../src/datetime-picker')
 var packageJson = require('../package.json')
 
-var App = React.createClass({
-  displayName: 'App',
+class App extends React.Component {
+  displayName = 'App';
 
-  selectionTypes: [{
+  selectionTypes = [{
     value: 'single',
     label: 'Single Date'
   }, {
@@ -22,15 +22,13 @@ var App = React.createClass({
   }, {
     value: 'range',
     label: 'In Range'
-  }],
+  }];
 
-  getInitialState() {
-    return {
-      date: moment(),
-      rangeType: 'single',
-      range: null
-    }
-  },
+  state = {
+    date: moment(),
+    rangeType: 'single',
+    range: null
+  };
 
   render() {
     return (
@@ -68,11 +66,11 @@ var App = React.createClass({
         </form>
       </div>
     )
-  },
+  }
 
-  handleChange(date) {
+  handleChange = (date) => {
     this.setState({ date })
-  },
+  }
 
   handleRangeChange(evt) {
     const rangeType = evt.target.value;
@@ -118,11 +116,11 @@ var App = React.createClass({
         });
       }
     }
-  },
+  }
 
-  handleDone() {
+  handleDone = () => {
     console.log('saved', this.state.date.format('llll'))
-  },
-})
+  }
+}
 
 ReactDOM.render(<App />, document.getElementById('app'))

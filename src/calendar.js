@@ -47,8 +47,8 @@ const styles = theme => ({
   },
 })
 
-const Day = React.createClass({
-  displayName: 'Day',
+class Day extends React.Component {
+  displayName = 'Day';
 
   render() {
     const {date, selectedDay, rangeEndDay, rangeDay, notRangeDay, prevOrNextMonth} = this.props
@@ -67,54 +67,54 @@ const Day = React.createClass({
         {date}
       </td>
     )
-  },
-})
+  }
+}
 
-const Calendar = React.createClass({
-  displayName: 'Calendar',
+class Calendar extends React.Component {
+  displayName = 'Calendar';
 
   getPrevOrNextMonth(date, week) {
     return {
       prevMonth: week === 0 && date > 7,
       nextMonth: week >= 4 && date <= 14
     }
-  },
+  }
 
-  isPrevOrNextMonth(date, week) {
+  isPrevOrNextMonth = (date, week) => {
     const {prevMonth, nextMonth} = this.getPrevOrNextMonth(date, week)
     return prevMonth || nextMonth
-  },
+  }
 
-  getDateTime(date, week) {
+  getDateTime = (date, week) => {
     const {prevMonth, nextMonth} = this.getPrevOrNextMonth(date, week)
     const addMonth = prevMonth ? -1 : nextMonth ? 1 : 0
     return this.props.moment.clone().add(addMonth, 'month').set('date', date).startOf('day')
-  },
+  }
 
-  isSelected(selectedDate, date, week) {
+  isSelected = (selectedDate, date, week) => {
     return !this.isPrevOrNextMonth(date, week) && date === selectedDate
-  },
+  }
 
-  isRangeEnd(date, week) {
+  isRangeEnd = (date, week) => {
     const datetime = this.getDateTime(date, week)
     const {range} = this.props
     return range && (
       range.end.startOf('day').isSame(datetime) ||
       range.start.startOf('day').isSame(datetime)
     );
-  },
+  }
 
-  inRange(date, week) {
+  inRange = (date, week) => {
     const datetime = this.getDateTime(date, week)
     const {range} = this.props
     return range &&
       range.start.startOf('day').isBefore(datetime) &&
       range.end.startOf('day').isAfter(datetime);
-  },
+  }
 
-  notInRange(date, week) {
+  notInRange = (date, week) => {
     return this.props.range && !this.inRange(date, week) && !this.isRangeEnd(date, week);
-  },
+  }
 
   render() {
     const cs = this.props.classes
@@ -203,9 +203,9 @@ const Calendar = React.createClass({
         </table>
       </div>
     )
-  },
+  }
 
-  selectDate(date, week) {
+  selectDate = (date, week) => {
     const {prevMonth, nextMonth} = this.getPrevOrNextMonth(date, week)
     const selected = this.props.moment
 
@@ -214,27 +214,27 @@ const Calendar = React.createClass({
     if (nextMonth) selected.add(1, 'month')
 
     this.props.onChange(selected)
-  },
+  }
 
-  prevMonth(e) {
+  prevMonth = (e) => {
     e.preventDefault()
     this.props.onChange(this.props.moment.subtract(1, 'month'))
-  },
+  }
 
-  nextMonth(e) {
+  nextMonth = (e) => {
     e.preventDefault()
     this.props.onChange(this.props.moment.add(1, 'month'))
-  },
+  }
 
-  prevYear(e) {
+  prevYear = (e) => {
     e.preventDefault()
     this.props.onChange(this.props.moment.subtract(1, 'year'))
-  },
+  }
 
-  nextYear(e) {
+  nextYear = (e) => {
     e.preventDefault()
     this.props.onChange(this.props.moment.add(1, 'year'))
-  },
-})
+  }
+}
 
 export default injectSheet(styles)(Calendar)

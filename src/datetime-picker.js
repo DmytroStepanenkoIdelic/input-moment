@@ -27,14 +27,12 @@ const styles = theme => ({
   },
 })
 
-const DatetimePicker = React.createClass({
-  displayName: 'DatetimePicker',
+class DatetimePicker extends React.Component {
+  displayName = 'DatetimePicker';
 
-  getInitialState() {
-    return {
-      tab: this.props.type === 'time' ? Tabs.TIME : Tabs.DATE,
-    }
-  },
+  state = {
+    tab: this.props.type === 'time' ? Tabs.TIME : Tabs.DATE
+  };
 
   render() {
     const tab = this.state.tab
@@ -110,16 +108,16 @@ const DatetimePicker = React.createClass({
         </button>
       </div>
     )
-  },
+  }
 
-  handleClickTab(tab, e) {
+  handleClickTab = (tab, e) => {
     this.setState({ tab: tab })
-  },
+  }
 
-  handleDone(e) {
+  handleDone = (e) => {
     if (this.props.onDone) this.props.onDone()
-  },
-})
+  }
+}
 
 const StyledDatetimePicker = injectSheet(styles)(DatetimePicker)
 

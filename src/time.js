@@ -23,8 +23,8 @@ const styles = theme => ({
   },
 })
 
-const Time = React.createClass({
-  displayName: 'Time',
+class Time extends React.Component {
+  displayName = 'Time';
 
   render() {
     const cs = this.props.classes
@@ -62,19 +62,19 @@ const Time = React.createClass({
         </div>
       </div>
     )
-  },
+  }
 
-  changeHours(pos) {
+  changeHours = (pos) => {
     const m = this.props.moment
     m.hours(parseInt(pos.x, 10))
     this.props.onChange(m)
-  },
+  }
 
-  changeMinutes(pos) {
+  changeMinutes = (pos) => {
     const m = this.props.moment
     m.minutes(parseInt(pos.x, 10))
     this.props.onChange(m)
-  },
-})
+  }
+}
 
 export default injectSheet(styles)(Time)
