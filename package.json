@@ -1,6 +1,6 @@
 {
-  "name": "yet-another-datetime-picker",
-  "version": "1.0.6",
+  "name": "yet-another-datetime-picker2",
+  "version": "1.0.0",
   "description": "React datetime picker powered by momentjs",
   "main": "index.js",
   "scripts": {
@@ -57,7 +57,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/noahsug/input-moment.git"
+    "url": "git+https://github.com/DmytroStepanenkoIdelic/input-moment.git"
   },
   "keywords": [
     "react",
@@ -68,7 +68,7 @@
     "moment"
   ],
   "bugs": {
-    "url": "https://github.com/noahsug/input-moment/issues"
+    "url": "https://github.com/DmytroStepanenkoIdelic/input-moment/issues"
   },
-  "homepage": "https://github.com/noahsug/input-moment#readme"
+  "homepage": "https://github.com/DmytroStepanenkoIdelic/input-moment#readme"
 }
