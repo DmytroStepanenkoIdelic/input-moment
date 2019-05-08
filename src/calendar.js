@@ -51,8 +51,8 @@ class Day extends React.Component {
   displayName = 'Day';
 
   render() {
-    const {date, selectedDay, rangeEndDay, rangeDay, notRangeDay, prevOrNextMonth} = this.props
-    const props = blacklist(this.props, 'date', 'selectedDay', 'rangeEndDay', 'rangeDay', 'notRangeDay', 'prevOrNextMonth', 'className')
+    const {date, selectedDay, rangeEndDay, rangeDay, notRangeDay, prevOrNextMonth, onClick} = this.props
+    const props = blacklist(this.props, 'date', 'selectedDay', 'rangeEndDay', 'rangeDay', 'notRangeDay', 'prevOrNextMonth', 'className', 'onClick')
 
     props.className = cx(this.props.className, {
       'selected-day': selectedDay,
@@ -63,7 +63,7 @@ class Day extends React.Component {
     })
 
     return (
-      <td {...props}>
+      <td {...props} onClick={notRangeDay ? undefined : onClick}>
         {date}
       </td>
     )
