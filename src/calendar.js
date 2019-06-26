@@ -209,9 +209,10 @@ class Calendar extends React.Component {
     const {prevMonth, nextMonth} = this.getPrevOrNextMonth(date, week)
     const selected = this.props.moment
 
-    selected.date(date)
+
     if (prevMonth) selected.subtract(1, 'month')
     if (nextMonth) selected.add(1, 'month')
+    selected.date(date)
 
     this.props.onChange(selected)
   }
